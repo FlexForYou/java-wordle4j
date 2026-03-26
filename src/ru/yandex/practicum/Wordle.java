@@ -3,7 +3,6 @@ package ru.yandex.practicum;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-
 /*
 в главном классе нам нужно:
     создать лог-файл (он должен передаваться во все классы)

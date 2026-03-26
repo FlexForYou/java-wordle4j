@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /*
 этот класс содержит в себе всю рутину по работе с файлами словарей и с кодировками
@@ -15,7 +14,6 @@ import java.util.Locale;
     на выходе должен быть класс WordleDictionary
  */
 public class WordleDictionaryLoader {
-
 
     public static List<String> createDictionaryForGame(String filename) throws IOException {
        // "D:\\Java\\java-wordle4j\\words_ru.txt"
