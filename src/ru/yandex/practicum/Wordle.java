@@ -1,5 +1,8 @@
 package ru.yandex.practicum;
 
+import ru.yandex.practicum.exceptions.InvalidWordLengthException;
+import ru.yandex.practicum.exceptions.WordNotFoundInDictionary;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -16,12 +19,17 @@ import java.util.Scanner;
 public class Wordle {
 
     public static void main(String[] args) throws IOException {
-        boolean playAgain= false;
+        boolean playAgain = false;
         WordleDictionary wordleDictionary = null;
         WordleGame wordleGame = null;
+
+        String wordsFile = "resources/words_ru.txt";
+        String logFile = "resources/Log.txt";
+
+        FileWriter writer = new FileWriter(logFile, true);
         Scanner scanner = new Scanner(System.in);
         wordleDictionary = new WordleDictionary(
-                WordleDictionaryLoader.createDictionaryForGame("D:\\Java\\java-wordle4j\\words_ru.txt"));
+                WordleDictionaryLoader.createDictionaryForGame(wordsFile, writer));
         do {
 
             try {
@@ -41,47 +49,47 @@ public class Wordle {
 
                         if (userInput.isEmpty()) {
                             // Получение подсказки
-                            String word = wordleGame.getHelp();
+                            String word = wordleGame.getHelp(writer);
                             System.out.println("Слово-подсказка: " + word);
-                            System.out.println(wordleGame.comparingWordWithAnswer(word));
+                            System.out.println(wordleGame.comparingWordWithAnswer(word, writer));
                         } else {
                             // Обработка введённого слова
-                            System.out.println(wordleGame.comparingWordWithAnswer(userInput));
+                            System.out.println(wordleGame.comparingWordWithAnswer(userInput, writer));
                         }
 
                     } catch (WordNotFoundInDictionary e) {
                         System.out.println("Данного слова нет в словаре. Попробуйте ввести другое слово.");
-                        FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
+
                         writer.write("Ошибка: " + e.getMessage() + "\n");
-                        writer.close();
+
                     } catch (InvalidWordLengthException e) {
 
                         System.out.println("Слово должно содержать ровно 5 букв.");
-                        FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
+
                         writer.write("Ошибка: " + e.getMessage() + "\n");
-                        writer.close();
+
                     } catch (Exception e) {
                         System.out.println("Неожиданная ошибка при обработке ввода");
-                        FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
+
                         writer.write("Неожиданная ошибка при обработке ввода: " + e.getMessage() + "\n");
-                        writer.close();
+
                     }
                 }
 
             } catch (IOException e) {
-                FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
+
                 writer.write("Ошибка загрузки словаря: файл не найден или недоступен. \n Проверьте путь к файлу: D:\\\\Java\\\\java-wordle4j\\\\words_ru.txt\" \n ");
-                writer.close();
+
                 return;
             } catch (NullPointerException e) {
-                FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
+
                 writer.write("Ошибка инициализации игры: словарь не был загружен." + "\n");
-                writer.close();
+
                 return;
             } catch (Exception e) {
-                FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
+
                 writer.write("Критическая ошибка при запуске игры: " + e.getMessage() + "\n");
-                writer.close();
+
                 return;
             }
 
@@ -99,6 +107,7 @@ public class Wordle {
 
         } while (playAgain);
         System.out.println("Спасибо за игру!");
+        writer.close();
     }
 
 }

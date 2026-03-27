@@ -1,4 +1,4 @@
-package ru.yandex.practicum;
+package ru.yandex.practicum.exceptions;
 
 public class WordNotFoundInDictionary extends RuntimeException {
     public WordNotFoundInDictionary(String message) {

@@ -1,5 +1,7 @@
 package ru.yandex.practicum;
 
+import ru.yandex.practicum.exceptions.*;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -56,7 +58,7 @@ public class WordleGame {
         this.answer = answer;
     }
 
-    public String comparingWordWithAnswer(String userWord) throws IOException {
+    public String comparingWordWithAnswer(String userWord, FileWriter writer) throws IOException {
         try {
             if (!dictionary.getWords().contains(userWord)) {
                 throw new WordNotFoundInDictionary("Слова нет в словаре");
@@ -90,19 +92,13 @@ public class WordleGame {
             return new String(hintSymbols);
 
         } catch (WordNotFoundInDictionary e) {
-            FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
             writer.write("Ошибка словаря: " + userWord + ":" + e.getMessage() + "\n");
-            writer.close();
             throw e;
         } catch (IllegalArgumentException e) {
-            FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
             writer.write("Некорректный ввод: " + e.getMessage() + "\n");
-            writer.close();
             throw e;
         } catch (Exception e) {
-            FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
             writer.write("Неожиданная ошибка: " + e.getMessage() + "\n");
-            writer.close();
             throw new RuntimeException("Произошла непредвиденная ошибка в процессе сравнения слов", e);
         }
 
@@ -121,7 +117,7 @@ public class WordleGame {
     }
 
 
-    public String getHelp() throws IOException {
+    public String getHelp(FileWriter writer) throws IOException {
         try {
             if (userWords.isEmpty()) {
                 return dictionary.getRandomWord();
@@ -197,15 +193,10 @@ public class WordleGame {
             return candidates.get(random.nextInt(candidates.size()));
 
         } catch (RuntimeException e) {
-
-            FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
             writer.write("Ошибка при получении подсказки: " + e.getMessage() + "\n");
-            writer.close();
             throw e;
         } catch (Exception e) {
-            FileWriter writer = new FileWriter("D:\\Java\\java-wordle4j\\Log.txt", true);
             writer.write("Неожиданная ошибка при получении подсказки: " + e.getMessage() + "\n");
-            writer.close();
             throw new RuntimeException("Произошла непредвиденная ошибка при генерации подсказки", e);
         }
     }
