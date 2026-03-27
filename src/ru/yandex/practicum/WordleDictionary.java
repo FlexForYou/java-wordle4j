@@ -25,17 +25,17 @@ public class WordleDictionary {
         return words;
     }
 
-    public void addNewWord(String word){
-        if(!(word.length() >5)){
+    public void addNewWord(String word) {
+        if (!(word.length() > 5)) {
             this.words.add(word.trim().toLowerCase().replace('ё', 'е'));
-        }else{
+        } else {
             System.out.println("Новое слово должно состоять из 5ти букв!");
         }
     }
 
-    public void deleteWord(String word){
-        String line= word.trim().toLowerCase().replace('ё', 'е');
-        if(words.contains(line)){
+    public void deleteWord(String word) {
+        String line = word.trim().toLowerCase().replace('ё', 'е');
+        if (words.contains(line)) {
             words.remove(line);
         } else {
             System.out.println("Слово уже удалено");
@@ -46,7 +46,7 @@ public class WordleDictionary {
 
     public String getRandomWord() {
         Random random = new Random();
-        return  words.get(random.nextInt(words.size()));
+        return words.get(random.nextInt(words.size()));
     }
 
 

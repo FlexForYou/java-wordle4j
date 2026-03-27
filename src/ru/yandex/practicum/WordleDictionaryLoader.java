@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 /*
 этот класс содержит в себе всю рутину по работе с файлами словарей и с кодировками

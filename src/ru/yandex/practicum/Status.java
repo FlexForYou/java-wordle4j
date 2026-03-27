@@ -1,5 +1,5 @@
 package ru.yandex.practicum;
 
 public enum Status {
-    IN_PROCESS,COMPLETED
+    IN_PROCESS, COMPLETED
 }
